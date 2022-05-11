@@ -145,11 +145,11 @@ public class MemberCRUD {
 //    @RequiredArgsConstructor // MemberServiceImpl(Map<String, Member> map){}
     static class MemberServiceImpl implements MemberService{
         private final Map<String, Member> map; // 메모리에 존재하는 DB 역할 (리덕스의 store) // props
-
-        MemberServiceImpl(){
+        private final List<Member> list;
+        public MemberServiceImpl() {
             map = new HashMap<>();
+            this.list = new ArrayList<>();
         }
-
         @Override
         public void save(Member member){ map.put(member.getUserid(), member); }
 
