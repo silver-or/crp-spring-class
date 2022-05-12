@@ -1,7 +1,10 @@
 package crp.kr.api.common.lambda;
 
+import org.apache.el.stream.Stream;
+
 import static crp.kr.api.common.dataStructure.AppleList.Apple;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.function.*;
 
@@ -31,6 +34,8 @@ public class Lambda {
         System.out.println(equals("홍길동", "홍"));
         System.out.println(equals("홍길동", "홍길동"));
         System.out.println(array(8).length);
+        System.out.println(random(1, 9));
+//        System.out.println(makeFile("C:\\Users\\admin\\Documents\\KDT5\\new").mkdir());
     }
 
     public static int integer(String arg) {
@@ -41,8 +46,10 @@ public class Lambda {
 
     public static String string(Object o) {
 //        String s = String.valueOf(o); // JSON.stringify()
-        Function<Object, String> f = String::valueOf;
+        Function<Object, String> f = String::valueOf; // f : 함수형 객체 = 람다 (고유값 -> 단 하나),  String::valueOf -> 람다를 만들어내는 람다식
         return f.apply(o);
+        // 레거시 : new 없음 -> 객체가 아닌데 객체의 일을 함 -> f.apply(o)
+        // 모던 : functional interface
     }
 
     public static boolean equals(String s1, String s2) {
@@ -58,8 +65,14 @@ public class Lambda {
         return f.apply(i);
     }
 
-    public static int random(Integer start, Integer end) {
-        Supplier<Double> d = Math::random;
-        return (int) (d.get() * end) + start;
+    public static int random(Integer min, Integer max) {
+//        BiFunction<Integer, Integer, Integer> f = Math::random * max + min; // 메소드 참조는 파라미터 사용 불가 -> 메소드 참조 우선, 안 되면 람다로 처리
+        BiFunction<Integer, Integer, Integer> f = (t, u) -> (int)(Math.random() * u) + t; // area (state) -> 이벤트 발생 시에만
+        return f.apply(min, max);
+    }
+
+    public static File makeFile(String arg) {
+        Function<String, File> f = File::new;
+        return f.apply(arg);
     }
 }
