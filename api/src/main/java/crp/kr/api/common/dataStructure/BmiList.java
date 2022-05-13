@@ -2,6 +2,7 @@ package crp.kr.api.common.dataStructure;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,32 +41,16 @@ public class BmiList {
         }
     }
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+    @Test
+    void bmiAppTest() {
         BmiService service = new BmiServiceImpl();
-        while (true) {
-            System.out.println("0.exit 1.save 2.update 3.delete 4.findByGender 5.findById 6.findAll 7.count");
-            switch (s.next()) {
-                case "0" : return;
-                case "1" :
-                    Bmi p1 = new Bmi.Builder("000817-4")
-                            .height(163.6)
-                            .weight(51)
-                            .build();
-                    service.save(p1);
-                    break;
-                case "2" : break;
-                case "3" : break;
-                case "4" :
-                    break;
-                case "5" : break;
-                case "6" :
-                    System.out.println("6.findAll: \n" + service.findAll());
-                    break;
-                case "7" : break;
-                default : break;
-            }
-        }
+        System.out.println("### 1. save ###");
+        Bmi p1 = new Bmi.Builder("000817-4")
+                .height(163.6)
+                .weight(51)
+                .build();
+        service.save(p1);
+        System.out.println("### 6. findAll\n" + service.findAll());
     }
 
     interface BmiService {

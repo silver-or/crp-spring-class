@@ -3,6 +3,7 @@ package crp.kr.api.common.dataStructure;
 import static crp.kr.api.common.lambda.Lambda.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -45,63 +46,54 @@ public class AppleList {
         }
 
     }
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+
+    @Test
+    void appleAppTest() {
         AppleService service = new AppleServiceImpl();
-        while (true) {
-            System.out.println("0.exit 1.save 2.update 3.delete 4.findById 5.findByOrigin 6.findByColor 7.findAll 8.count 9.existsById 10.clear 11.lambda");
-            switch (s.next()) {
-                case "0" : return;
-                case "1" :
-                    Apple yd = new Apple.Builder()
-                            .origin("영동")
-                            .color("RED")
-                            .price(1000)
-                            .build();
-                    service.save(yd);
-                    Apple yd2 = new Apple.Builder()
-                            .origin("영동")
-                            .color("BLUE")
-                            .price(1500)
-                            .build();
-                    service.save(yd2);
-                    Apple pg = new Apple.Builder()
-                            .origin("풍기")
-                            .color("RED")
-                            .price(2000)
-                            .build();
-                    service.save(pg);
-                    break;
-                case "2" : break;
-                case "3" :
-                    break;
-                case "4" :
-                    break;
-                case "5" :
-                    System.out.println("5.findByOrigin");
-                    System.out.println(service.findByOrigin("영동"));
-                    break;
-                case "6" :
-                    System.out.println("6.findByColor");
-                    System.out.println(service.findByColor("RED"));
-                    break;
-                case "7" :
-                    System.out.println("7.findAll: \n" + service.findAll());
-                    break;
-                case "8" :
-                    System.out.println("총 사과 갯수: " + service.count() + " 개");
-                    break;
-                case "9" : break;
-                case "10" :
-                    service.clear();
-                    break;
-                case "11" :
-                    System.out.println("사과 가격은 " + integer("1000"));
-                    System.out.println("내가 만든 배열의 사이즈는 " + array(8).length);
-                    break;
-                default : break;
-            }
-        }
+        System.out.println("### 1. save ###");
+        Apple yd = new Apple.Builder()
+                .origin("영동")
+                .color("RED")
+                .price(1000)
+                .build();
+        service.save(yd);
+        Apple yd2 = new Apple.Builder()
+                .origin("영동")
+                .color("BLUE")
+                .price(1500)
+                .build();
+        service.save(yd2);
+        Apple pg = new Apple.Builder()
+                .origin("풍기")
+                .color("RED")
+                .price(2000)
+                .build();
+        service.save(pg);
+        System.out.println("### 2. count ###");
+        System.out.println(service.count());
+        System.out.println("### 3. findAll ###");
+        System.out.println(service.findAll());
+        System.out.println("### 4. findByOrigin ###");
+        System.out.println(service.findByOrigin("영동"));
+        System.out.println("### 5. findById ###");
+        System.out.println("첫번째 사과 정보 : " + service.findById(0));
+        System.out.println("### 6. update ###");
+        service.update(0, new Apple.Builder()
+                .origin("캘리포니아")
+                .color("YELLOW")
+                .price(20000)
+                .build());
+        System.out.println("수정된 사과 정보 : " + service.findById(0));
+        System.out.println("### 7. delete ###");
+        service.delete(new Apple.Builder()
+                .origin("캘리포니아")
+                .color("YELLOW")
+                .price(20000)
+                .build());
+        System.out.println("삭제후 카운트 감소 확인 : " + service.count());
+        System.out.println("### 8. clear ###");
+        service.clear();
+        System.out.println("clear 후 카운트 0 확인 : " + service.count());
     }
 
     interface AppleService{
