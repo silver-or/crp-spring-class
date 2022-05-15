@@ -1,6 +1,7 @@
 package crp.kr.api.common.dataStructure;
 
 import lombok.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,81 +55,65 @@ public class MemberCRUD {
         }
     }
 
-    public static void main(String[] args) { // controller
-        Scanner s = new Scanner(System.in);
+    @Test
+    void memberCRUDTest() {
         MemberService service = new MemberServiceImpl();
-        while (true) {
-            System.out.println("0.exit 1.save 2.update 3.delete 4.findById 5.findByName 6.findAll 7.count 8.existsById");
-            switch (s.next()) {
-                case "0" : return;
-                case "1" :
-                    Member hong = new Member.Builder("hong") // 대문자는 전부 static
-                            .email("hong@test.com")
-                            .password("1")
-                            .name("홍길동")
-                            .phone("010-0000-9999")
-                            .profileImg("hong.jpg")
-                            .build();
-                    service.save(hong);
-                    Member kim = new Member.Builder("kim")
-                            .email("kim@test.com")
-                            .password("1")
-                            .name("김유신")
-                            .phone("010-0044-9944")
-                            .profileImg("kim.jpg")
-                            .build();
-                    service.save(kim);
-                    Member you = new Member.Builder("you")
-                            .email("you@test.com")
-                            .password("1")
-                            .name("유관순")
-                            .phone("010-0880-9889")
-                            .profileImg("you.jpg")
-                            .build();
-                    service.save(you);
-                    break;
-                case "2" :
-                    kim = new Member.Builder("kim")
-                            .email("kim@test.com")
-                            .password("1")
-                            .name("김유신")
-                            .phone("010-1111-2222")
-                            .profileImg("kim.jpg")
-                            .build();
-                    service.update(kim);
-                    System.out.println(kim.name + "의 전화번호 update 완료 : " + kim.phone);
-                    break;
-                case "3" :
-                    Member temp = new Member();
-                    temp.setUserid("kim");
-                    if (service.existsById("kim")){
-                        service.delete(temp);
-                        System.out.println("유저 삭제가 완료됐습니다.");
-                    }
-                    else {
-                        System.out.println("해당 유저가 없습니다.");
-                    }
-
-                    break;
-                case "4" :
-                    String res = service.existsById("kim")? service.findById("kim").toString() : "해당 유저가 없습니다.";
-                    System.out.println(res);
-                    break;
-                case "5" :
-                    System.out.println(service.findByName("홍길동"));
-                    break;
-                case "6" :
-                    System.out.println("총 회원목록 : " + service.findAll());
-                    break;
-                case "7" :
-                    System.out.println(service.count());
-                    break;
-                case "8" :
-                    System.out.println(service.existsById("hong"));
-                    break;
-                default : break;
-            }
+        System.out.println("### 1. save ###");
+        Member hong = new Member.Builder("hong") // 대문자는 전부 static
+                .email("hong@test.com")
+                .password("1")
+                .name("홍길동")
+                .phone("010-0000-9999")
+                .profileImg("hong.jpg")
+                .build();
+        service.save(hong);
+        Member kim = new Member.Builder("kim")
+                .email("kim@test.com")
+                .password("1")
+                .name("김유신")
+                .phone("010-0044-9944")
+                .profileImg("kim.jpg")
+                .build();
+        service.save(kim);
+        Member you = new Member.Builder("you")
+                .email("you@test.com")
+                .password("1")
+                .name("유관순")
+                .phone("010-0880-9889")
+                .profileImg("you.jpg")
+                .build();
+        service.save(you);
+        System.out.println("### 2. update ###");
+        kim = new Member.Builder("kim")
+                .email("kim@test.com")
+                .password("1")
+                .name("김유신")
+                .phone("010-1111-2222")
+                .profileImg("kim.jpg")
+                .build();
+        service.update(kim);
+        System.out.println(kim.name + "의 전화번호 update 완료 : " + kim.phone);
+        System.out.println("### 3. delete ###");
+        Member temp = new Member();
+        temp.setUserid("kim");
+        if (service.existsById("kim")){
+            service.delete(temp);
+            System.out.println("유저 삭제가 완료됐습니다.");
         }
+        else {
+            System.out.println("해당 유저가 없습니다.");
+        }
+        System.out.println("### 4. findById ###");
+        String res = service.existsById("kim")? service.findById("kim").toString() : "해당 유저가 없습니다.";
+        System.out.println(res);
+        System.out.println("### 5. findByName ###");
+        System.out.println(service.findByName("홍길동"));
+        System.out.println("### 6. findAll ###");
+        System.out.println("총 회원목록 : " + service.findAll());
+        System.out.println("### 7. count ###");
+        System.out.println(service.count());
+        System.out.println("### 8. existsById ###");
+        System.out.println(service.existsById("hong"));
     }
 
     interface MemberService{ // service

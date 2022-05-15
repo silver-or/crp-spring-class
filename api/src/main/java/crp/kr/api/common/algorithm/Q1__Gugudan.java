@@ -2,6 +2,7 @@ package crp.kr.api.common.algorithm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -23,6 +24,38 @@ import java.util.Scanner;
     }
 }
 public class Q1__Gugudan {
+
+/*
+    @Test
+    void q1GugudanTest() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("### 1. 계산기 ###");
+        calc();
+        System.out.println("### 2. bmi ###");
+        bmi();
+        System.out.println("### 3. 주사위 ###");
+        dice();
+        System.out.println("### 4. 가위바위보 ###");
+        rps();
+        System.out.println("### 5. 윤년 ###");
+        leap();
+        System.out.println("### 6. 숫자 추론 ###");
+        guess();
+        System.out.println("### 7. 로또 ###");
+        lotto();
+        System.out.println("### 8. 예약 ###");
+        booking(scanner);
+        System.out.println("### 9. 입출금 ###");
+        bank(scanner);
+        System.out.println("### 10 구구단 ###");
+        gugudan();
+        System.out.println("### 11. 숫자 게임 ###");
+        playNumberGameWithComputer();
+        System.out.println("### 12. 야구 ###");
+        baseball(scanner);
+    }
+ */
+
     public static void main(String[] args) { // 03소수 quiz03prime()
         Scanner scanner = new Scanner(System.in);
         while (true){
@@ -46,14 +79,17 @@ public class Q1__Gugudan {
             }
         }
     } // main
+
     static void calc(){
         Scanner s = new Scanner(System.in);
-        System.out.println("숫자1, 숫자2, 연산자");
+        System.out.println("숫자1, 연산자, 숫자2");
         System.out.println(new Calculator(s.nextInt(), s.next(), s.nextInt()));;
     }
+
     static void bmi(){
 
     }
+
     static void dice(){
         System.out.println("01 주사위");
         // 홀수나올때까지 주사위굴려 합하는 프로그래밍
@@ -89,6 +125,7 @@ public class Q1__Gugudan {
         if(player!=com) s = (player>com) ? "Win" : "Lose";
         System.out.println(s);
     }
+
     static void rps(){
         System.out.println("02 가위바위보");
         System.out.println(" ----------- 1 -------------");
@@ -124,6 +161,7 @@ public class Q1__Gugudan {
         }
         System.out.printf("Player: %s", arr[i]);
     }
+
     static void leap(){
         System.out.println("04 윤년");
         //윤년은 해당년도가 4로 나눈 나머지값이 0인것이다. (i%4==0)
@@ -139,6 +177,7 @@ public class Q1__Gugudan {
             s = "평년";
         System.out.println(String.format("%d는 %s입니다.", i, s));
     }
+
     static void guess(){
         System.out.println("05 숫자추론");
         Scanner scanner = new Scanner(System.in);
@@ -158,6 +197,7 @@ public class Q1__Gugudan {
             }
         }
     }
+
     static void lotto(){
         System.out.println("06 로또");
         String res = "";
@@ -176,6 +216,7 @@ public class Q1__Gugudan {
         System.out.println(res);
 
     }
+
     static void booking(Scanner scanner){
         System.out.println("07 예약");
         // 1. 배열을 이용하여 간단한 극장 예약시스템 작성
@@ -208,6 +249,7 @@ public class Q1__Gugudan {
         System.out.println("프로그램을 종료합니다.");
         scanner.close();
     }
+
     static void bank(Scanner scanner){
         System.out.println("08 입출금");
         int select = 0;
@@ -315,8 +357,8 @@ public class Q1__Gugudan {
                 }
             }
         }
-
     }
+
     static void gugudan(){
         System.out.println("09 구구단");
         System.out.println(" --------- 1 --------------");
@@ -367,6 +409,7 @@ public class Q1__Gugudan {
             System.out.println("\n"); //4개의 단(2단~5단)이 모두 출력 된 후, 엔터
         }
     }
+
     static void playNumberGameWithComputer() {
         Random random = new Random();
         double d = Math.random();
@@ -379,6 +422,7 @@ public class Q1__Gugudan {
         System.out.println(s);
 
     }
+
     static void baseball(Scanner scanner) {
         int com1 = (int)(Math.random()*9)+1;
         int com2 = (int)(Math.random()*9)+1;
@@ -435,11 +479,7 @@ public class Q1__Gugudan {
             else {
                 out+=1;
             }
-
             System.out.println("Strike : " + strike + ", Ball : " + ball + ", Out : " + out);
-
         }
-
     }
-
 }

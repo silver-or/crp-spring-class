@@ -1,6 +1,7 @@
 package crp.kr.api.common.lambda;
 
 import org.apache.el.stream.Stream;
+import org.junit.jupiter.api.Test;
 
 import static crp.kr.api.common.dataStructure.AppleList.Apple;
 
@@ -20,7 +21,8 @@ import java.util.function.*;
  * 2022-05-11    최은아       최초 생성
  */
 public class Lambda {
-    public static void main(String[] args) {
+    @Test
+    void lambdaTest() {
 //        System.out.println(Lambda.integer("900"));
         System.out.println(Lambda.string(900));
         System.out.println(string(new Apple.Builder().origin("영동").color("RED").price(3000).build()));
