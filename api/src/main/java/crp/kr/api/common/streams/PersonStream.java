@@ -29,9 +29,9 @@ public class PersonStream {
     @Getter
     public static class Person { // static = const // 바깥에 root class가 있을 경우
         private String name, ssn;
-        private int genderChk = Integer.parseInt(ssn.substring(ssn.length()-1));
 
         @Override public String toString() {
+            int genderChk = Integer.parseInt(ssn.substring(ssn.length()-1));
             String gender = genderChk % 2 == 1 ? "남성" : "여성";
             int birthYear = Integer.parseInt(ssn.substring(0, 2));
             birthYear += genderChk < 3 ? 1900 : 2000;
@@ -40,28 +40,23 @@ public class PersonStream {
         }
     }
 
-    interface PersonService {
+    @FunctionalInterface interface PersonService {
         Person search(List<Person> arr, String name);
-    }
-
-    static class PersonServiceImpl implements PersonService {
-        @Override
-        public Person search(List<Person> arr, String name) {
-            return arr
-                    .stream()
-                    .filter(e -> e.getName().equals(name))
-                    .collect(Collectors.toList()).get(0);
-        }
     }
 
     @Test
     void personStreamTest() {
-        List<Person> arr = Arrays.asList(
+        List<Person> ls = Arrays.asList(
                 Person.builder().name("홍길동").ssn("900120-1").build(),
                 Person.builder().name("김유신").ssn("970620-1").build(),
                 Person.builder().name("유관순").ssn("040920-4").build()
         );
-        System.out.println(new PersonServiceImpl().search(arr, "유관순"));
+        PersonService ps = (arr, name) -> arr // 타입 추론
+                .stream()
+                .filter(e -> e.getName().equals(name)) // stream 위에 떠다니는 person 객체 -> 다른 타입(List<>, Set<>, Map<>) 으로 변경 가능 // e : element (집합체 안의 요소 하나)
+                // 이름이 name인 객체를 필터링해서 다 모음
+                .collect(Collectors.toList()).get(0); // 하나의 리스트 (stream) 안에서 움직임 -> 0번째 리턴
+        System.out.println(ps.search(ls, "유관순"));
 
     }
 }
