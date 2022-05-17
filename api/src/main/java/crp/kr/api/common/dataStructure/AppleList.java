@@ -1,12 +1,10 @@
 package crp.kr.api.common.dataStructure;
 
-import static crp.kr.api.common.lambda.Lambda.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**

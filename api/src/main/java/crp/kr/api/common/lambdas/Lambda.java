@@ -1,6 +1,5 @@
-package crp.kr.api.common.lambda;
+package crp.kr.api.common.lambdas;
 
-import org.apache.el.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import static crp.kr.api.common.dataStructure.AppleList.Apple;
