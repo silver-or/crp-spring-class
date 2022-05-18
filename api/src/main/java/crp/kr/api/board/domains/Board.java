@@ -36,6 +36,6 @@ public class Board {
     String boardName; // Q&A ...
     @Column(name = "created_date") @NotNull private String createdDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "board")
     List<Article> articles = new ArrayList<>();
 }
