@@ -1,6 +1,9 @@
 package crp.kr.api.common.algorithm;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -14,7 +17,15 @@ import org.junit.jupiter.api.Test;
  * ================================
  * 2022-05-17    최은아       최초 생성
  */
-public class Gugudan { // 그리디 + 그래프
+public class GugudanInput { // 그리디 +
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class Solution {
+        private int[][] arr;
+    }
+
     @FunctionalInterface interface SolutionService {
         void solution();
     }

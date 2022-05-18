@@ -36,6 +36,7 @@ public class RemoveDuplicateElementsWithArray {
             return String.format("중복 제거 후 배열 : %s", Arrays.toString(arr));
         }
     }
+
     @FunctionalInterface interface SolutionService {
         Solution solution(Solution s);
     }

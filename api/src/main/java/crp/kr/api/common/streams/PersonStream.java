@@ -40,8 +40,8 @@ public class PersonStream {
         }
     }
 
-    @FunctionalInterface interface PersonService {
-        Person search(List<Person> arr, String name);
+    @FunctionalInterface interface PersonService { // @FunctionalInterface 로 구분
+        Person search(List<Person> arr, String name); // 메소드 단 하나 존재
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PersonStream {
                 Person.builder().name("김유신").ssn("970620-1").build(),
                 Person.builder().name("유관순").ssn("040920-4").build()
         );
-        PersonService ps = (arr, name) -> arr // 타입 추론
+        PersonService ps = (arr, name) -> arr // 타입 추론 (위에서) → List<Person> arr, String name
                 .stream()
                 .filter(e -> e.getName().equals(name)) // stream 위에 떠다니는 person 객체 -> 다른 타입(List<>, Set<>, Map<>) 으로 변경 가능 // e : element (집합체 안의 요소 하나)
                 // 이름이 name인 객체를 필터링해서 다 모음

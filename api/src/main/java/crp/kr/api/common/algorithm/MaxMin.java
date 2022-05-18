@@ -22,14 +22,14 @@ import java.util.function.Function;
  * ================================
  * 2022-05-17    최은아       최초 생성
  */
-public class MaxMin {
+public class MaxMin { // 그리디
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     public static class Solution {
         private int[] arr;
-        private int max, min;
+        private int max, min; // 속성 → 빌더
 
         @Override
         public String toString() {
@@ -41,10 +41,9 @@ public class MaxMin {
         public Solution solution(Solution s);
     }
 
-
     @Test
     void testSolution() {
-        int[] arr = {3, 1, 9, 5, 10};
+        int[] arr = {3, 1, 9, 5, 10}; // 더미
         SolutionService f = e -> {
             int min = 10, max = 0;
             for (int i : e.getArr()) {

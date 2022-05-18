@@ -1,7 +1,12 @@
 package crp.kr.api.board.domains;
 
-import lombok.Data;
+import com.sun.istack.NotNull;
+import lombok.*;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * packageName: crp.kr.api.domains
@@ -15,7 +20,22 @@ import org.springframework.stereotype.Component;
  * 2022-05-04    최은아       최초 생성
  */
 
-@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Component
+@Entity
+@Table(name="boards")
 public class Board {
+    @Id
+    @Column(name = "board_id")
+    @GeneratedValue
+    private long boardId;
+    @Column private @NotNull
+    String boardName; // Q&A ...
+    @Column(name = "created_date") @NotNull private String createdDate;
+
+    @OneToMany(mappedBy = "user")
+    List<Article> articles = new ArrayList<>();
 }

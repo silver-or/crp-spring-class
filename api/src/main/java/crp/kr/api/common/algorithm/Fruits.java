@@ -26,18 +26,18 @@ public class Fruits {
         private int total, apple, grape, orange;
         private int[][] fruitMarket;
 
-
         @Override
         public String toString() {
             return String.format("총합 : %d\n사과 평균 : %d\n포도 평균 : %d\n오렌지 평균 : %d\n",
                     total, apple / fruitMarket.length, grape / fruitMarket.length, orange / fruitMarket.length);
         }
     }
+
      @FunctionalInterface interface SolutionService {
         Solution solution(Solution s);
      }
 
-     @Test
+    @Test
     void testFruit() {
          int[][] fm = new int[][]{
                  {10000, 20000, 12000},
@@ -50,15 +50,15 @@ public class Fruits {
          };
 
          SolutionService f = e -> {
-             for (int[] ints : e.fruitMarket) {
-                 for (int j = 0; j < ints.length; j++) {
+            for (int[] ints : e.fruitMarket) {
+                for (int j = 0; j < ints.length; j++) {
                      if (j == 0) e.apple += ints[j];
                      else if (j == 1) e.grape += ints[j];
                      else e.orange += ints[j];
                      e.total += ints[j];
-                 }
-             }
-           return e;
+                }
+            }
+            return e;
          };
 
          Solution s = Solution.builder().fruitMarket(fm).build();
