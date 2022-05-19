@@ -90,4 +90,8 @@ public class UserServiceImpl implements UserService {
 //        ls.stream().filter(...)
         return null;
     }
+
+    public String test() {
+        return "테스트";
+    }
 }

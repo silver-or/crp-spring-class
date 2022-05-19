@@ -15,6 +15,11 @@ import org.springframework.stereotype.Repository;
  * ================================
  * 2022-05-09    최은아       최초 생성
  */
+
+interface AuthCustomRepository {
+
+}
+
 @Repository
-public interface AuthRepository extends JpaRepository<User, Long> {
+public interface AuthRepository extends JpaRepository<User, Long>, AuthCustomRepository {
 }

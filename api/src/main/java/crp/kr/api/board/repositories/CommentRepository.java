@@ -15,6 +15,11 @@ import org.springframework.stereotype.Repository;
  * ================================
  * 2022-05-09    최은아       최초 생성
  */
+
+interface CommentCustomRepository {
+
+}
+
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long>, CommentCustomRepository {
 }
