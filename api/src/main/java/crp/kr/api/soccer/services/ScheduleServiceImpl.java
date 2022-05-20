@@ -62,12 +62,12 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public Optional<Schedule> findById(Long id) {
-        return repository.findById(id);
+    public Optional<Schedule> findById(Long scheduleNo) {
+        return repository.findById(scheduleNo);
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
+    public boolean existsById(Long scheduleNo) {
+        return repository.existsById(scheduleNo);
     }
 }

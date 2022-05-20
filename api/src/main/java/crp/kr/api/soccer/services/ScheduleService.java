@@ -33,7 +33,7 @@ public interface ScheduleService {
 
     String save(Schedule schedule);
 
-    Optional<Schedule> findById(Long id);
+    Optional<Schedule> findById(Long scheduleNo);
 
-    boolean existsById(Long id);
+    boolean existsById(Long scheduleNo);
 }

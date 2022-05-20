@@ -53,14 +53,14 @@ public class StadiumController {
         return service.delete(stadium);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/save")
     public String save(@RequestBody Stadium stadium) {
         return service.save(stadium);
     }
 
-    @GetMapping("/findById/{stadiumId}")
-    public Optional<Stadium> findById(@PathVariable Long stadiumId) { return service.findById(stadiumId); }
+    @GetMapping("/findById/{stadiumNo}")
+    public Optional<Stadium> findById(@PathVariable Long stadiumNo) { return service.findById(stadiumNo); }
 
-    @GetMapping("/existsById/{stadiumId}")
-    public boolean existsById(@PathVariable Long stadiumId) {  return service.existsById(stadiumId); }
+    @GetMapping("/existsById/{stadiumNo}")
+    public boolean existsById(@PathVariable Long stadiumNo) {  return service.existsById(stadiumNo); }
 }

@@ -55,7 +55,7 @@ public class BoardController {
         return service.delete(board);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/save")
     public String save(@RequestBody Board board) {
         return service.save(board);
     }

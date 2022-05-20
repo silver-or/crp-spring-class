@@ -61,12 +61,12 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public Optional<Player> findById(Long playerId) {
-        return repository.findById(playerId);
+    public Optional<Player> findById(Long playerNo) {
+        return repository.findById(playerNo);
     }
 
     @Override
-    public boolean existsById(Long playerId) {
-        return repository.existsById(playerId);
+    public boolean existsById(Long playerNo) {
+        return repository.existsById(playerNo);
     }
 }

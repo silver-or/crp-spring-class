@@ -55,14 +55,14 @@ public class PlayerController {
         return service.delete(player);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/save")
     public String save(@RequestBody Player player) {
         return service.save(player);
     }
 
-    @GetMapping("/findById/{playerId}")
-    public Optional<Player> findById(@PathVariable Long playerId) { return service.findById(playerId); }
+    @GetMapping("/findById/{playerNo}")
+    public Optional<Player> findById(@PathVariable Long playerNo) { return service.findById(playerNo); }
 
-    @GetMapping("/existsById/{playerId}")
-    public boolean existsById(@PathVariable Long playerId) {  return service.existsById(playerId); }
+    @GetMapping("/existsById/{playerNo}")
+    public boolean existsById(@PathVariable Long playerNo) {  return service.existsById(playerNo); }
 }

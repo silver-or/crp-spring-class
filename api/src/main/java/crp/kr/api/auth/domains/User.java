@@ -34,7 +34,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue private long userId;
-    @Column private @NotNull String username;
+    @Column private @NotNull String userName;
     @Column private @NotNull String password;
     @Column private @NotNull String name;
     @Column private @NotNull String email;

@@ -32,7 +32,7 @@ public interface PlayerService {
 
     String save(Player player);
 
-    Optional<Player> findById(Long playerId);
+    Optional<Player> findById(Long playerNo);
 
-    boolean existsById(Long playerId);
+    boolean existsById(Long playerNo);
 }

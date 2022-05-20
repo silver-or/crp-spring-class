@@ -32,7 +32,7 @@ public interface TeamService {
 
     String save(Team team);
 
-    Optional<Team> findById(Long teamId);
+    Optional<Team> findById(Long teamNo);
 
-    boolean existsById(Long teamId);
+    boolean existsById(Long teamNo);
 }

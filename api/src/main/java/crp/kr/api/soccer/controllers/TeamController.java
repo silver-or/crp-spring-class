@@ -53,14 +53,14 @@ public class TeamController {
         return service.delete(team);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/save")
     public String save(@RequestBody Team team) {
         return service.save(team);
     }
 
-    @GetMapping("/findById/{teamId}")
-    public Optional<Team> findById(@PathVariable Long teamId) { return service.findById(teamId); }
+    @GetMapping("/findById/{teamNo}")
+    public Optional<Team> findById(@PathVariable Long teamNo) { return service.findById(teamNo); }
 
-    @GetMapping("/existsById/{teamId}")
-    public boolean existsById(@PathVariable Long teamId) {  return service.existsById(teamId); }
+    @GetMapping("/existsById/{teamNo}")
+    public boolean existsById(@PathVariable Long teamNo) {  return service.existsById(teamNo); }
 }

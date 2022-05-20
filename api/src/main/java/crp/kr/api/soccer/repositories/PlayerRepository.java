@@ -2,6 +2,8 @@ package crp.kr.api.soccer.repositories;
 
 import crp.kr.api.soccer.domains.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,7 +19,9 @@ import org.springframework.stereotype.Repository;
  */
 
 interface PlayerCustomRepository {
-
+    //  000. 선수들의 키와 몸무게를 변경하시오.
+    @Query(value = "update Player p set p.height = :height, p.weight = :weight where p.playerId = :playerId", nativeQuery = true)
+    int update(@Param("height") String height, @Param("weight") String weight, @Param("playerId") String playerId);
 }
 
 @Repository

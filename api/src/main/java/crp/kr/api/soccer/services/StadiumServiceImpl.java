@@ -61,12 +61,12 @@ public class StadiumServiceImpl implements StadiumService{
     }
 
     @Override
-    public Optional<Stadium> findById(Long stadiumId) {
-        return repository.findById(stadiumId);
+    public Optional<Stadium> findById(Long stadiumNo) {
+        return repository.findById(stadiumNo);
     }
 
     @Override
-    public boolean existsById(Long stadiumId) {
-        return repository.existsById(stadiumId);
+    public boolean existsById(Long stadiumNo) {
+        return repository.existsById(stadiumNo);
     }
 }

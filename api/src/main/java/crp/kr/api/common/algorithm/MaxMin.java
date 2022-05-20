@@ -22,6 +22,12 @@ import java.util.function.Function;
  * ================================
  * 2022-05-17    최은아       최초 생성
  */
+/*
+    그리디와 완전탐색
+    공통점 : 선형 구조, for loop 사용
+    차이점 : if문 사용 → 더 나은 상황인지 몰라도 실행
+    cf. 비선형구조는 그래프와 트리
+ */
 public class MaxMin { // 그리디
     @Builder
     @NoArgsConstructor

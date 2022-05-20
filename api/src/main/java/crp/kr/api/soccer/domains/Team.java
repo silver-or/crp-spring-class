@@ -28,7 +28,7 @@ import java.util.List;
 public class Team {
     @Id
     @Column(name = "team_no")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) private long teamNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) private Long teamNo;
     @Column(nullable = false) private String teamId;
     @Column(nullable = false) private String stadiumId;
     private String regionName;

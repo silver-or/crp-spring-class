@@ -61,12 +61,12 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
-    public Optional<Team> findById(Long teamId) {
-        return repository.findById(teamId);
+    public Optional<Team> findById(Long teamNo) {
+        return repository.findById(teamNo);
     }
 
     @Override
-    public boolean existsById(Long teamId) {
-        return repository.existsById(teamId);
+    public boolean existsById(Long teamNo) {
+        return repository.existsById(teamNo);
     }
 }

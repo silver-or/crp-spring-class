@@ -53,15 +53,15 @@ public class ScheduleController {
         return service.delete(schedule);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/save")
     public String save(@RequestBody Schedule schedule) {
         return service.save(schedule);
     }
 
-    @GetMapping("/findById/{id}")
-    public Optional<Schedule> findById(@PathVariable Long id) { return service.findById(id); }
+    @GetMapping("/findById/{scheduleNo}")
+    public Optional<Schedule> findById(@PathVariable Long scheduleNo) { return service.findById(scheduleNo); }
 
-    @GetMapping("/existsById/{id}")
-    public boolean existsById(@PathVariable Long id) {  return service.existsById(id); }
+    @GetMapping("/existsById/{scheduleNo}")
+    public boolean existsById(@PathVariable Long scheduleNo) {  return service.existsById(scheduleNo); }
 
 }

@@ -26,7 +26,7 @@ import javax.persistence.*;
 public class Schedule {
     @Id
     @Column(name = "schedule_no")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) private long scheduleNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) private Long scheduleNo;
     private String scheDate;
     private String gubun;
     private String hometeamId;

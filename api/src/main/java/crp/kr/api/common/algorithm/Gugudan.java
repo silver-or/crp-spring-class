@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * ================================
  * 2022-05-17    최은아       최초 생성
  */
-public class Gugudan { // 그리디 + 그래프
+public class Gugudan { // 완전탐색
     @FunctionalInterface interface SolutionService {
         void solution();
     }

@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(User user) {
-        return repository.login(user);
+//        return repository.login(user);
+        return null;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String put(User user) {
-        repository.put(user);
+//        repository.put(user);
         return "";
     }
 

@@ -26,7 +26,7 @@ import javax.persistence.*;
 public class Player {
     @Id
     @Column(name = "player_no")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) private long playerNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) private Long playerNo;
     @Column(nullable = false) private String playerId;
     @Column(nullable = false) private String playerName;
     private String ePlayerName;

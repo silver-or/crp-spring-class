@@ -32,7 +32,7 @@ public interface StadiumService {
 
     String save(Stadium stadium);
 
-    Optional<Stadium> findById(Long stadiumId);
+    Optional<Stadium> findById(Long stadiumNo);
 
-    boolean existsById(Long stadiumId);
+    boolean existsById(Long stadiumNo);
 }
