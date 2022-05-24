@@ -1,9 +1,8 @@
-package crp.kr.api.auth.domains;
+package crp.kr.api.user.domains;
 
 import com.sun.istack.NotNull;
 import crp.kr.api.board.domains.Article;
 import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package crp.kr.api.auth.domains;
+package crp.kr.api.user.domains;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
