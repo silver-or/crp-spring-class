@@ -1,16 +1,28 @@
 package crp.kr.api.user.services;
 
+import crp.kr.api.auth.configs.AuthProvider;
+import crp.kr.api.auth.domains.Messenger;
+import crp.kr.api.auth.exception.SecurityRuntimeException;
+import crp.kr.api.common.lambdas.Lambda;
+import crp.kr.api.user.domains.Role;
+import crp.kr.api.user.domains.UserDTO;
 import crp.kr.api.user.repositories.UserRepository;
 import crp.kr.api.user.domains.User;
 import crp.kr.api.common.dataStructure.Box;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static crp.kr.api.common.lambdas.Lambda.*;
 
 /**
  * packageName: crp.kr.api.services
@@ -28,11 +40,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository; // service : 자식, repository : 부모
+    private final PasswordEncoder encoder;
+    private final AuthProvider provider;
+    private final ModelMapper modelMapper; // Entity와 DTO change
 
     @Override
-    public String login(User user) {
-//        return repository.login(user);
-        return null;
+    public UserDTO login(User user) { // 객체는 JSON과 일대일대응함
+        try {
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class); // UserDto class에 옮겨담음
+            User findUser = repository.findByUsername(user.getUserName()).orElse(null); // 없으면 null 허용
+            String pw = repository.findByUsername(user.getUserName()).get().getPassword();
+            boolean checkPassword = encoder.matches(user.getPassword(), pw);
+            String userName = user.getUserName();
+            List<Role> roles = findUser.getRoles();
+            String token = checkPassword ? provider.createToken(userName, roles) : "Wrong Password";
+            userDTO.setToken(token);
+            return userDTO; // 리액트로 가는 객체 (cf. DB로 가는 객체는 User)
+        } catch (Exception e) {
+            throw new SecurityRuntimeException("유효하지 않은 아이디 / 비밀번호", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
+
+    @Override
+    public Messenger logout() {
+        return Messenger.builder().build();
     }
 
     @Override
@@ -51,26 +82,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public long count() {
-        return repository.count();
+    public Messenger count() {
+        return Messenger.builder().message(string(repository.count())).build();
     }
 
     @Override
-    public String put(User user) {
-//        repository.put(user);
-        return "";
+    public Messenger update(User user) {
+        return Messenger.builder().message("").build();
     }
 
     @Override
-    public String delete(User user) {
+    public Messenger delete(User user) {
         repository.delete(user);
-        return "";
+        return Messenger.builder().message("").build();
     }
 
     @Override
-    public String save(User user) {
-        repository.save(user);
-        return null;
+    public Messenger save(User user) {
+        // userName은 custom id
+        String result = "";
+        if (repository.findByUsername(user.getUserName()).isEmpty()) {
+            List<Role> list = new ArrayList<>();
+            list.add(Role.USER);
+            repository.save(User.builder().password(encoder.encode(user.getPassword()))
+                    .roles(list).build());
+            result = "SUCCESS";
+        } else {
+            result = "FAIL";
+        }
+        return Messenger.builder().message(result).build();
     }
 
     @Override
@@ -79,8 +119,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existsById(String userid) {
-        return repository.existsById(0L); // userid 타입이 다름
+    public Messenger existsById(String userid) {
+        return repository.existsById(longParse(userid))
+                ? Messenger.builder().message("EXIST").build()
+                : Messenger.builder().message("NOT_EXIST").build(); // userid 타입이 다름
     }
 
     @Override

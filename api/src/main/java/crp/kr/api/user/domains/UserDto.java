@@ -18,7 +18,7 @@ import java.util.List;
  * 2022-05-24    최은아       최초 생성
  */
 @Component @Data
-public class UserDto { // 리액트에서 담음 // 감시 대상 (이후 User로 상태 변화)
+public class UserDTO { // 리액트에서 담음 // 감시 대상 (이후 User로 상태 변화)
     @ApiModelProperty(position = 1) private long userId;
     @ApiModelProperty(position = 2) private String userName;
     @ApiModelProperty(position = 3) private String password;

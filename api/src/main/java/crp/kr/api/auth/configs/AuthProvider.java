@@ -68,7 +68,7 @@ public class AuthProvider implements AuthenticationProvider { // Provider : ì™¸ë
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails auth = service.loadUserByUsername(token);
+        UserDetails auth = service.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(auth.getAuthorities(), "", auth.getAuthorities());
     }
 

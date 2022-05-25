@@ -16,6 +16,5 @@ import lombok.Getter;
  */
 @Builder @Getter
 public class Messenger { // DB 설정 X // 리액트(화면)에 던짐 // 로그인 안 풀리게 하는 역할
-    private String message, code;
-    private int status;
+    private String message, code, token;
 }

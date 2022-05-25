@@ -45,6 +45,16 @@ public class Lambda {
         return f.apply(arg);
     }
 
+    public static long longParse(String s) {
+        Function<String, Long> f = Long::parseLong;
+        return f.apply(s);
+    }
+
+    public static float floatParse(String s) {
+        Function<String, Float> f = Float::parseFloat;
+        return f.apply(s);
+    }
+
     public static String string(Object o) {
 //        String s = String.valueOf(o); // JSON.stringify()
         Function<Object, String> f = String::valueOf; // f : 함수형 객체 = 람다 (고유값 -> 단 하나),  String::valueOf -> 람다를 만들어내는 람다식
