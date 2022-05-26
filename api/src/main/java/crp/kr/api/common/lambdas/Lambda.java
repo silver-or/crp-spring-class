@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import static crp.kr.api.common.dataStructure.AppleList.Apple;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.function.*;
 
 /**
@@ -85,5 +89,15 @@ public class Lambda {
     public static File makeFile(String arg) {
         Function<String, File> f = File::new;
         return f.apply(arg);
+    }
+
+    public static String getDateToString() {
+        Supplier<String> s = () -> LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return s.get();
+    }
+
+    public static Date getDate() {
+        Supplier<Date> s = Date::new;
+        return s.get();
     }
 }

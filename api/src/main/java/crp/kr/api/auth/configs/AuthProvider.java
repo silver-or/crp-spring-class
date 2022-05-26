@@ -41,54 +41,55 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class AuthProvider implements AuthenticationProvider { // Provider : 외부 (Spring Security 라이브러리)
+
     private final AuthServiceImpl service; // service가 안에 있으므로 컨트롤러의 포지션
 
     // 외부에서 주입되는 값
     @Value("${security.jwt.token.security-key:secret-key}")
     private String securityKey;
+
     @Value("${security.jwt.token.expiration-length:3600000}")
     private long validityInMs = 3600000; // 유효시간 : 1h
 
     @PostConstruct
-    protected void init() {
+    protected void init(){
         securityKey = Base64.getEncoder().encodeToString(securityKey.getBytes());
-        log.info("securityKey : " + securityKey);
+        log.info("securityKey: " + securityKey);
     }
 
-    public String createToken(String username, List<Role> roles) {
+    public String createToken(String username, List<Role> roles){
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority()))
-                .filter(Objects::nonNull).collect(Collectors.toList())
-        );
+                .filter(Objects::nonNull).collect(Collectors.toList()));
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMs);
-        return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, securityKey)
+        Date validity = new Date(now.getTime()+validityInMs);
+        return Jwts.builder().setClaims(claims).setIssuedAt(now)
+                .setExpiration(validity).signWith(SignatureAlgorithm.HS256, securityKey)
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token){
         UserDetails auth = service.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(auth.getAuthorities(), "", auth.getAuthorities());
     }
 
-    public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(securityKey).parseClaimsJws(token).getBody().getSubject(); // 입력한 securityKey parsing
+    public String getUsername(String token){
+        return Jwts.parser().setSigningKey(securityKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer")) {
+        if(bearerToken != null && bearerToken.startsWith("Bearer")){
             return bearerToken.substring(7);
         }
         return null;
     }
 
-    public boolean validateToken(String token) throws Exception {
-        try {
+    public boolean validateToken(String token) throws Exception{
+        try{
             Jwts.parser().setSigningKey(securityKey).parseClaimsJws(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
+        }catch(JwtException | IllegalArgumentException e){
             throw new Exception();
         }
     }

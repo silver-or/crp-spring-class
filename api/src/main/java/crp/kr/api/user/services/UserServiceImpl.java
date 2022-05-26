@@ -45,17 +45,23 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper; // Entity와 DTO change
 
     @Override
-    public UserDTO login(User user) { // 객체는 JSON과 일대일대응함
+    public UserDTO login(UserDTO paramUser) { // 객체는 JSON과 일대일대응함
         try {
-            UserDTO userDTO = modelMapper.map(user, UserDTO.class); // UserDto class에 옮겨담음
-            User findUser = repository.findByUsername(user.getUserName()).orElse(null); // 없으면 null 허용
-            String pw = repository.findByUsername(user.getUserName()).get().getPassword();
-            boolean checkPassword = encoder.matches(user.getPassword(), pw);
-            String userName = user.getUserName();
-            List<Role> roles = findUser.getRoles();
-            String token = checkPassword ? provider.createToken(userName, roles) : "Wrong Password";
-            userDTO.setToken(token);
-            return userDTO; // 리액트로 가는 객체 (cf. DB로 가는 객체는 User)
+            UserDTO returnUser = new UserDTO();
+            String username = paramUser.getUsername();
+            User findUser = repository.findByUsername(username).orElse(null); // 없으면 null 허용
+            if (findUser != null) {
+                boolean checkPassword = encoder.matches(paramUser.getPassword(), findUser.getPassword());
+                if (checkPassword) {
+                    returnUser = modelMapper.map(findUser, UserDTO.class); // User는 @NotNull이므로 비어있으면 에러 발생 -> User에서 UserDTO로 옮겨담음
+                    String token = provider.createToken(username, returnUser.getRoles());
+                    returnUser.setToken(token);
+                } else {
+                    String token = "FAILURE";
+                    returnUser.setToken(token);
+                }
+            }
+            return returnUser; // 리액트로 가는 객체 (cf. DB로 가는 객체는 User)
         } catch (Exception e) {
             throw new SecurityRuntimeException("유효하지 않은 아이디 / 비밀번호", HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -98,14 +104,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Messenger save(User user) {
+    public Messenger save(UserDTO user) {
         // userName은 custom id
+        System.out.println("서비스로 전달된 회원가입 정보 : " + user.toString());
         String result = "";
-        if (repository.findByUsername(user.getUserName()).isEmpty()) {
+        if (repository.findByUsername(user.getUsername()).isEmpty()) {
             List<Role> list = new ArrayList<>();
             list.add(Role.USER);
-            repository.save(User.builder().password(encoder.encode(user.getPassword()))
-                    .roles(list).build());
+            repository.save(User.builder()
+                            .username(user.getUsername())
+                            .password(encoder.encode(user.getPassword()))
+                            .name(user.getName())
+                            .email(user.getEmail())
+                            .regDate(user.getRegDate())
+                            .roles(list).build());
             result = "SUCCESS";
         } else {
             result = "FAIL";

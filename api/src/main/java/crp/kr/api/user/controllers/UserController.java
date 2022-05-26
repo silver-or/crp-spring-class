@@ -4,7 +4,9 @@ import crp.kr.api.auth.domains.Messenger;
 import crp.kr.api.user.domains.User;
 import crp.kr.api.user.domains.UserDTO;
 import crp.kr.api.user.services.UserService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,9 +28,11 @@ import java.util.Optional;
  * 2022-05-03    최은아       최초 생성
  */
 
+@CrossOrigin(origins = "*", allowedHeaders = "*") // 내 상대방의 출처를 밝힘 // 로컬 -> 출처가 어디든 다 허용한다.
+@Api(tags = "users") // 외부에서 users 라는 단어가 있는 것만 허용
 @RestController // @Component의 자식
 @RequiredArgsConstructor // 필수 파라미터 → 리액트에서 props → 자식
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     /*
     private UserService service;
@@ -37,9 +41,16 @@ public class UserController {
     }
     */
     private final UserService service; // 자동으로 controller의 생성자 안에 service가 들어감 → controller가 자식, service가 부모
+    private final ModelMapper modelMapper;
 
+    // switch-case의 default 느낌
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody User user) { // Entity는 실제 값
+    @ApiOperation(value = "${UserController.login}")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "Something Wrong"),
+            @ApiResponse(code = 422, message = "유효하지 않은 ID / PW")
+    })
+    public ResponseEntity<UserDTO> login(@ApiParam("Login User") @RequestBody UserDTO user) { // Entity는 실제 값
         return ResponseEntity.ok(service.login(user));
     }
 
@@ -74,8 +85,19 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Messenger> save(@RequestBody User user) {
-        return ResponseEntity.ok(service.save(user));
+    @ApiOperation(value = "${UserController.join}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something Wrong"),
+            @ApiResponse(code = 403, message = "승인 거절"),
+            @ApiResponse(code = 422, message = "중복된 ID")
+    })
+    public ResponseEntity<Messenger> save(@ApiParam("Join User") @RequestBody UserDTO user) { // User라는 Entity를 외부에서 아예 안 보이게 함
+        System.out.println("회원가입 정보 : " + user.toString()); // 나중에 지울 예정. sout은 있으면 안 됨
+        return ResponseEntity.ok(service.save(user)); // 인스턴스가 아니라 User라는 class (박스, 공간) 에 담아라 -> set 안 함 -> 자동으로 인스턴스화가 됨
+        /*
+        * 보안 취약 -> map 사용 (은닉화)
+        * User.builder().password(user.getPassword()).build();
+        * */
     }
 
     @GetMapping("/findById/{userid}")

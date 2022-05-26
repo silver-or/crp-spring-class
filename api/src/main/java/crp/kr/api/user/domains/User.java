@@ -21,6 +21,7 @@ import java.util.List;
  * 2022-05-03    최은아       최초 생성
  */
 @Builder
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,12 +29,13 @@ import java.util.List;
 // 컴포넌트는 property와 method의 집합이다.
 // 리액트에서 컴포넌트는 props와 state, 그리고 render()를 가진 순수 함수이다.
 @Entity
+@ToString
 @Table(name="users")
-public class User { // 인증 완료된 사용자 (신분이 달라짐)
+public class User { // 인증 완료된 사용자 (신분이 달라짐) // Entity
     @Id
     @Column(name = "user_id")
     @GeneratedValue private long userId;
-    @Column private @NotNull String userName;
+    @Column private @NotNull String username;
     @Column private @NotNull String password;
     @Column private @NotNull String name;
     @Column private @NotNull String email;
